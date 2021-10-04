@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 
 class ProductList extends React.Component {
 
-  handleSelect = (e) => {
-    console.log('ay 7agaaa')
-  }
 
   render() { 
     return(
@@ -31,7 +28,6 @@ class ProductList extends React.Component {
                 specific={product.specific}
                 handleChecked={this.props.handleChecked}
                 checked={this.props.checked}
-                handleSelect={this.handleSelect}
               />
           ))}
         </div>

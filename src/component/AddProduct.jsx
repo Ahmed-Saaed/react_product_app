@@ -3,17 +3,7 @@ import { Link } from 'react-router-dom';
 import Options from './formOptions';
 
 class AddProduct extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      switcher : ''
-    }
-  }
-  handleChange = (e) => {
-    this.setState(
-      {switcher : e.target.value}
-    )
-  }
+
   render() { 
     return (
       // our second page 
@@ -33,15 +23,18 @@ class AddProduct extends React.Component {
           <input id = 'name' onChange = {this.props.nameChange} value = {this.props.name} className="form-control p-3 my-5" type="text" name = 'name' placeholder ='name'required/>
           <input id = 'price' onChange = {this.props.priceChange} value = {this.props.price} className="form-control p-3 my-5" type="text" name = 'price' placeholder = 'price' required/>
           <input className="form-control p-3 my-5" list="datalistOptions" id="product-type" placeholder= 'choose the product type'
-          onChange = {this.handleChange} value = {this.state.switcher} required/>
-          <datalist id="datalistOptions" onChange = {this.handleChange} value = {this.state.switcher}>
+          onChange = {this.props.handleChange} value = {this.props.switcher} required/>
+          <datalist id="datalistOptions" >
             <option value="dvd"/>
             <option value="book"/>
             <option value="furniture"/>
           </datalist>
-          <Options switcher = {this.state.switcher}
-                              sizeChange={this.props.sizeChange}
-                                  
+          <Options switcher = {this.props.switcher}
+                              sizeChange = {this.props.sizeChange}
+                              weightChange = {this.props.weightChange}
+                              heightChange = {this.props.heightChange}
+                              widthChange = {this.props.widthChange}
+                              lengthChange = {this.props.lengthChange}                          
           />
           </div>
         </form>

@@ -37,13 +37,22 @@ class App extends Component {
         specific: 'Dimension: 24 x 45 x 15',
       },
     ],
+    switcher: '',
     sku: '',
     name: '',
-    price: null,
+    price: '',
     size: '',
     weight: '',
-    dimension: {height: '', width: '', length: ''},
-    checked: false,
+    height: '',
+    width: '',
+    length: '',
+    // checkedBoxes: new Array(this.state.products.length).fill(false),
+  };
+
+  // control all our input changes
+
+  handleChange = (e) => {
+    this.setState({switcher: e.target.value});
   };
 
   skuChange = (e) => {
@@ -58,35 +67,23 @@ class App extends Component {
     this.setState({price: parseInt(e.target.value)});
   };
   sizeChange = (e) => {
-    this.setState({size: 'size: ' + parseInt(e.target.value)});
+    this.setState({size: 'size: ' + parseInt(e.target.value) + ' mb'});
   };
   weightChange = (e) => {
-    this.setState({weight: 'weight :' + e.target.value});
+    this.setState({weight: 'weight: ' + parseInt(e.target.value) + ' kg'});
   };
   heightChange = (e) => {
-    let dimension = Object.assign(
-      {height: e.target.value},
-      this.state.dimension
-    );
-
-    this.setState({dimension});
+    this.setState({height: 'Dimension: ' + e.target.value});
   };
-  widthChange = (e) => {
-    let dimension = Object.assign(
-      {width: e.target.value},
-      this.state.dimension
-    );
 
-    this.setState({dimension});
+  widthChange = (e) => {
+    this.setState({width: ' x ' + e.target.value + ' x '});
   };
   lengthChange = (e) => {
-    let dimension = Object.assign(
-      {length: e.target.value},
-      this.state.dimension
-    );
-
-    this.setState({dimension});
+    this.setState({length: e.target.value});
   };
+
+  // handle the save button
 
   handleSubmit = (e, product) => {
     e.preventDefault();
@@ -95,11 +92,20 @@ class App extends Component {
     // const index = products.indexOf(product);
     // products[index] = {...products[index]};
     //edit
+    let specific = () => {
+      if (this.state.switcher === 'furniture') {
+        return this.state.height + this.state.width + this.state.length;
+      } else if (this.state.switcher === 'dvd') {
+        return this.state.size;
+      } else {
+        return this.state.weight;
+      }
+    };
     const newProduct = {
       sku: this.state.sku,
       name: this.state.name,
       price: this.state.price,
-      specific: this.state.size,
+      specific: specific(),
     };
     products.push(newProduct);
     this.setState({products});
@@ -108,15 +114,20 @@ class App extends Component {
     this.props.history.push('/');
   };
 
-  handleChecked = () => {
-    this.setState({checked: !this.state.checked});
-  };
+  // ToDo here where I failed at link the checkboxes with the mass delete button :
 
-  handleDelete = (props) => {
-    if (this.state.checked === true) {
-      console.log(props);
-    }
-  };
+  // // handleOnChange = (position) => {
+  // //  let updateCheckBoxes = this.state.checkedBoxes.map((item, index) =>
+  //  //   index === position ? !item : item
+  // //  );
+
+  // //  this.setState({checkedBoxes: updateCheckBoxes});
+  // // };
+  // // handleDelete = (props) => {
+  //  // if (this.state.checked === true) {
+  //   //  console.log(props);
+  // //  }
+  // //};
 
   render() {
     return (
@@ -128,9 +139,9 @@ class App extends Component {
             render={(props) => (
               <ProductList
                 products={this.state.products}
-                handleChecked={this.handleChecked}
+                // handleOnChange={this.handleOnChange}
                 handleDelete={this.handleDelete}
-                checked={this.state.checked}
+                // checkedBoxes={this.state.checkedBoxes}
                 {...props}
               />
             )}
@@ -140,14 +151,24 @@ class App extends Component {
             render={(props) => (
               <AddProduct
                 products={this.state.products}
+                switcher={this.state.switcher}
+                handleChange={this.handleChange}
                 skuChange={this.skuChange}
                 nameChange={this.nameChange}
                 priceChange={this.priceChange}
                 sizeChange={this.sizeChange}
+                weightChange={this.weightChange}
+                heightChange={this.heightChange}
+                widthChange={this.widthChange}
+                lengthChange={this.lengthChange}
                 sku={this.state.sku}
                 name={this.state.name}
                 price={this.state.price}
                 size={this.state.size}
+                weight={this.state.weight}
+                height={this.state.height}
+                width={this.state.width}
+                length={this.state.length}
                 handleSubmit={this.handleSubmit}
                 {...props}
               />
