@@ -9,36 +9,93 @@ import NotFound from './component/NotFound';
 class App extends Component {
   state = {
     products: [
-      {SKU: '1', name: 'acme DISC', price: 1, specific: 'Size: 700 MB'},
-      {SKU: '2', name: 'acme DISC', price: 1, specific: 'Size: 700 MB'},
-      {SKU: '3', name: 'acme DISC', price: 1, specific: 'Size: 700 MB'},
-      {SKU: '4', name: 'acme DISC', price: 1, specific: 'Size: 700 MB'},
-      {SKU: '5', name: 'War and Peace', price: 20, specific: 'Weight: 2kg'},
-      {SKU: '6', name: 'War and Peace', price: 20, specific: 'Weight: 2kg'},
-      {SKU: '7', name: 'War and Peace', price: 20, specific: 'Weight: 2kg'},
-      {SKU: '8', name: 'War and Peace', price: 20, specific: 'Weight: 2kg'},
-      {SKU: '9', name: 'chair', price: 40, specific: 'Dimension: 24 x 45 x 15'},
+      {
+        SKU: '1',
+        name: 'acme DISC',
+        price: 1,
+        specific: 'Size: 700 MB',
+        checked: false,
+      },
+      {
+        SKU: '2',
+        name: 'acme DISC',
+        price: 1,
+        specific: 'Size: 700 MB',
+        checked: false,
+      },
+      {
+        SKU: '3',
+        name: 'acme DISC',
+        price: 1,
+        specific: 'Size: 700 MB',
+        checked: false,
+      },
+      {
+        SKU: '4',
+        name: 'acme DISC',
+        price: 1,
+        specific: 'Size: 700 MB',
+        checked: false,
+      },
+      {
+        SKU: '5',
+        name: 'War and Peace',
+        price: 20,
+        specific: 'Weight: 2kg',
+        checked: false,
+      },
+      {
+        SKU: '6',
+        name: 'War and Peace',
+        price: 20,
+        specific: 'Weight: 2kg',
+        checked: false,
+      },
+      {
+        SKU: '7',
+        name: 'War and Peace',
+        price: 20,
+        specific: 'Weight: 2kg',
+        checked: false,
+      },
+      {
+        SKU: '8',
+        name: 'War and Peace',
+        price: 20,
+        specific: 'Weight: 2kg',
+        checked: false,
+      },
+      {
+        SKU: '9',
+        name: 'chair',
+        price: 40,
+        specific: 'Dimension: 24 x 45 x 15',
+        checked: false,
+      },
       {
         SKU: '10',
         name: 'chair',
         price: 40,
         specific: 'Dimension: 24 x 45 x 15',
+        checked: false,
       },
       {
         SKU: '11',
         name: 'chair',
         price: 40,
         specific: 'Dimension: 24 x 45 x 15',
+        checked: false,
       },
       {
         SKU: '12',
         name: 'chair',
         price: 40,
         specific: 'Dimension: 24 x 45 x 15',
+        checked: false,
       },
     ],
     switcher: '',
-    sku: '',
+    SKU: '',
     name: '',
     price: '',
     size: '',
@@ -46,7 +103,6 @@ class App extends Component {
     height: '',
     width: '',
     length: '',
-    // checkedBoxes: new Array(this.state.products.length).fill(false),
   };
 
   // control all our input changes
@@ -56,7 +112,7 @@ class App extends Component {
   };
 
   skuChange = (e) => {
-    this.setState({sku: e.target.value});
+    this.setState({SKU: e.target.value});
   };
 
   nameChange = (e) => {
@@ -89,8 +145,8 @@ class App extends Component {
     e.preventDefault();
     // clone our product
     let products = [...this.state.products];
-    // const index = products.indexOf(product);
-    // products[index] = {...products[index]};
+    const index = products.indexOf(product);
+    products[index] = {...products[index]};
     //edit
     let specific = () => {
       if (this.state.switcher === 'furniture') {
@@ -102,32 +158,34 @@ class App extends Component {
       }
     };
     const newProduct = {
-      sku: this.state.sku,
+      SKU: this.state.SKU,
       name: this.state.name,
       price: this.state.price,
       specific: specific(),
     };
     products.push(newProduct);
     this.setState({products});
-    console.log(products);
 
     this.props.history.push('/');
   };
 
-  // ToDo here where I failed at link the checkboxes with the mass delete button :
+  handleCheck = (product) => {
+    // clone our product
+    let products = [...this.state.products];
+    const index = products.indexOf(product);
+    products[index] = {...products[index]};
 
-  // // handleOnChange = (position) => {
-  // //  let updateCheckBoxes = this.state.checkedBoxes.map((item, index) =>
-  //  //   index === position ? !item : item
-  // //  );
+    //edit
+    products[index].checked = !products[index].checked;
+    console.log(products);
+    this.setState({products});
+  };
+  handleDelete = () => {
+    let products = this.state.products.filter((p) => p.checked === false);
+    products.map((e) => (e.checked = false));
 
-  // //  this.setState({checkedBoxes: updateCheckBoxes});
-  // // };
-  // // handleDelete = (props) => {
-  //  // if (this.state.checked === true) {
-  //   //  console.log(props);
-  // //  }
-  // //};
+    this.setState({products});
+  };
 
   render() {
     return (
@@ -139,9 +197,8 @@ class App extends Component {
             render={(props) => (
               <ProductList
                 products={this.state.products}
-                // handleOnChange={this.handleOnChange}
+                handleCheck={this.handleCheck}
                 handleDelete={this.handleDelete}
-                // checkedBoxes={this.state.checkedBoxes}
                 {...props}
               />
             )}
@@ -161,7 +218,7 @@ class App extends Component {
                 heightChange={this.heightChange}
                 widthChange={this.widthChange}
                 lengthChange={this.lengthChange}
-                sku={this.state.sku}
+                SKU={this.state.SKU}
                 name={this.state.name}
                 price={this.state.price}
                 size={this.state.size}

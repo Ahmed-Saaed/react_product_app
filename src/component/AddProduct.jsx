@@ -11,7 +11,7 @@ class AddProduct extends React.Component {
               <form id = 'product-form' className ="" action="">
                 {/* add the nav bar */}
         <nav className="navbar  navbar-dark bg-dark">
-          <a className="nav-link disabled ms-4" href='/'>add product</a>
+          <a className="nav-brand disabled ms-4 text-decoration-none" href='/'>add product</a>
           <div className = 'd-flex'>
           <button onClick = {this.props.handleSubmit} className = "btn btn-primary btn-md justify-self-end ">save</button>
           <Link to = '/' className="btn btn-warning btn-md mx-4 " role="button" aria-disabled="true">cancel</Link>
@@ -19,7 +19,7 @@ class AddProduct extends React.Component {
         </nav>
               {/* our controled form  */}
           <div className = 'container'>
-          <input id = 'sku' onChange = {this.props.skuChange} value = {this.props.sku} className="form-control p-3 my-5"  type="text" name = 'SKU' placeholder ='#SKU' required/>
+          <input id = 'sku' onChange = {this.props.skuChange} value = {this.props.SKU} className="form-control p-3 my-5"  type="text" name = 'SKU' placeholder ='#SKU' required/>
           <input id = 'name' onChange = {this.props.nameChange} value = {this.props.name} className="form-control p-3 my-5" type="text" name = 'name' placeholder ='name'required/>
           <input id = 'price' onChange = {this.props.priceChange} value = {this.props.price} className="form-control p-3 my-5" type="text" name = 'price' placeholder = 'price' required/>
           <input className="form-control p-3 my-5" list="datalistOptions" id="product-type" placeholder= 'choose the product type'
